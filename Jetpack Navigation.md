@@ -28,3 +28,52 @@
 
 
 
+## 1. Navigation与BottomNavigationView联动
+
+BottomNavigationView是androidx中的一个底部导航栏控件，而Android中也对二者之间的联动提供了Api支持：==NavigationUI.setupWithNavController(bottomNav, navController)==。
+
+值得注意的是，**要求BottomNavigationView的menu资源文件中的资源的id与navigation资源文件中的fragment的id一致**，才能够实现联动跳转，而且此时，navigation资源文件中的各个fragment不需要添加action标签。
+
+##### menu.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.starstudio.projectdemo.MainActivity">
+
+    <item
+        android:id="@+id/JournalFragment"
+        android:title="@string/menu_bottom_journal"
+        android:icon="@drawable/info"/>
+
+    ...
+
+</menu>
+```
+
+##### navigation.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/JournalFragment">
+
+    <fragment
+        android:id="@+id/JournalFragment"
+        android:name="com.starstudio.projectdemo.JournalFragment"
+        android:label="journal_fragment"
+        tools:layout="@layout/fragment_journal" />
+
+    ...
+
+</navigation>
+```
+
+可见两个的id确实是一致的。
+
